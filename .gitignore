@@ -1,0 +1,23 @@
+pom.xml
+pom.xml.asc
+*.jar
+*.class
+/lib/
+/classes/
+/target/
+/checkouts/
+.lein-deps-sum
+.lein-repl-history
+.lein-plugins/
+.lein-failures
+.nrepl-port
+.cpcache/
+
+# Remove some dev files
+/resources/public/css/screen.css
+/resources/public/js/compiled
+.shadow-cljs
+node_modules
+
+# MacOS
+.DS_Store
