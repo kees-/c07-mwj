@@ -15,7 +15,7 @@ pom.xml.asc
 
 # Remove some dev files
 /resources/public/css/screen.css
-/resources/public/js/compiled
+/resources/public/js/compiled/cljs-runtime
 .shadow-cljs
 node_modules
 
