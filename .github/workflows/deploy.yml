@@ -16,9 +16,9 @@ jobs:
       - name: Deploy
         uses: Reggionick/s3-deploy@v3.1.1
         with:
-          folder: resources/public
+          folder: ./resources/public
           bucket: ${{ secrets.S3_BUCKET }}
-          bucket-region: us-west-1
+          bucket-region: ${{ secrets.S3_BUCKET_REGION }}
           delete-removed: true
           private: true
       - run: echo "Seems like it's working?"
