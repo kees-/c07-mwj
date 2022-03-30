@@ -5,20 +5,35 @@ on:
       - 'main'
     paths:
       - 'resources/public/**'
+      - '!resources/public/js/compiled/cljs-runtime/**'
+# jobs:
+#   run:
+#     runs-on: ubuntu-latest
+#     env:
+#       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#     steps:
+#       - run: which npx && pwd
+#       - name: Deploy
+#         uses: Reggionick/s3-deploy@v3.1.1
+#         with:
+#           folder: ./resources/public
+#           bucket: ${{ secrets.S3_BUCKET }}
+#           bucket-region: ${{ secrets.S3_BUCKET_REGION }}
+#           delete-removed: true
+#           private: true
+#       - run: echo "Seems like it's working?"
 jobs:
-  run:
+  deploy:
     runs-on: ubuntu-latest
-    env:
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     steps:
-      - run: which npx && pwd
-      - name: Deploy
-        uses: Reggionick/s3-deploy@v3.1.1
+      - name: S3 Sync
+        uses: jakejarvis/s3-sync-action@v0.5.1
         with:
-          folder: ./resources/public
-          bucket: ${{ secrets.S3_BUCKET }}
-          bucket-region: ${{ secrets.S3_BUCKET_REGION }}
-          delete-removed: true
-          private: true
-      - run: echo "Seems like it's working?"
+          args: --acl public-read --follow-symlinks --delete
+        env:
+          AWS_S3_BUCKET: ${{ secrets.S3_BUCKET }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.S3_BUCKET_REGION }}
+          SOURCE_DIR: 'resources/public'
