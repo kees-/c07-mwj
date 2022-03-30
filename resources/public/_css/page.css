@@ -7,3 +7,20 @@ input, button, textarea, select {font: inherit;}
 p, h1, h2, h3, h4, h5, h6 {overflow-wrap: break-word;}
 #root, #__next {isolation: isolate;}
 
+html {
+  background: black;
+  color: white;
+}
+
+.citrus-cage {
+  display: block;
+  margin: 10rem auto;
+  padding: .25rem;
+  max-width: 10rem;
+  background: darkslategrey;
+  color: darkorange;
+  font-family: sans-serif;
+  font-weight: 700;
+  text-align: center;
+  border: 1px solid aliceblue;
+}
