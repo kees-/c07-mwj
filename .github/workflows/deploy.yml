@@ -27,7 +27,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - run: pwd && ls -a .
+      - run: pwd && ls -a /
       - name: S3 Sync
         uses: jakejarvis/s3-sync-action@v0.5.1
         with:
