@@ -1,0 +1,23 @@
+name: Deploy (prebuilt) build dir to s3
+on:
+  push:
+    branches:
+      - 'main'
+    paths:
+      - 'resources/public/**'
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    steps:
+      - name: Deploy
+        uses: Reggionick/s3-deploy@v3.1.1
+        with:
+          folder: resources/public
+          bucket: ${{ secrets.S3_BUCKET }}
+          bucket-region: ${{ secrets.S3_BUCKET_REGION }}
+          delete-removed: true
+          private: true
+      - run: echo "Seems like it's working?"
