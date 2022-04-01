@@ -1,4 +1,4 @@
-name: Deploy (prebuilt) build dir to s3
+name: Deploy prebuilt site
 on:
   push:
     branches:
@@ -6,19 +6,24 @@ on:
     paths:
       - 'resources/public/**'
 jobs:
-  run:
+  deploy:
     runs-on: ubuntu-latest
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     steps:
-      - run: which npx && pwd
-      - name: Deploy
+      - uses: actions/checkout@v3
+      - name: S3 Deploy
         uses: Reggionick/s3-deploy@v3.1.1
         with:
           folder: resources/public
           bucket: ${{ secrets.S3_BUCKET }}
           bucket-region: ${{ secrets.S3_BUCKET_REGION }}
+          # AWS CloudFront distribution ID
+          # dist-id: # optional
+          # AWS CloudFront invalidation path(s)
+          # invalidation: # optional
           delete-removed: true
+          # Use this parameter to specify Cache-Control: no-cache, no-store, must-revalidate header
+          # no-cache: # optional
           private: true
-      - run: echo "Seems like it's working?"
