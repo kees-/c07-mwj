@@ -1,6 +1,6 @@
 name: Deploy prebuilt site
 on:
-  manual_deploy:
+  manual_deploy
   push:
     branches:
       - 'main'
