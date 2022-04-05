@@ -29,4 +29,5 @@ html {
 .citrus-cage article {
   color: orange;
   font-size: 2rem;
+  text-shadow: 0 0 10px gold;
 }

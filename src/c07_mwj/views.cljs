@@ -5,8 +5,8 @@
 
 (defn citrus []
   [:div.citrus-cage
-   [:span "My citrus in bloom"]
-   [:article (str (char 1000) (char 9675))]])
+   [:span "Now in bloom"]
+   [:article (str (char 4305))]])
 
 (defn main-panel []
   (let []
