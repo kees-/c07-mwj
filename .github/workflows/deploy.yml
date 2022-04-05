@@ -1,5 +1,6 @@
 name: Deploy prebuilt site
 on:
+  manual_deploy:
   push:
     branches:
       - 'main'
@@ -19,10 +20,8 @@ jobs:
           folder: resources/public
           bucket: ${{ secrets.S3_BUCKET }}
           bucket-region: ${{ secrets.S3_BUCKET_REGION }}
-          # AWS CloudFront distribution ID
-          # dist-id: # optional
-          # AWS CloudFront invalidation path(s)
-          # invalidation: # optional
+          dist-id: ${{ secrets.CLOUDFRONT_DIST_ID }}
+          invalidation: /*
           delete-removed: true
           # Use this parameter to specify Cache-Control: no-cache, no-store, must-revalidate header
           # no-cache: # optional
