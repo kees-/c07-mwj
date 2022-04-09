@@ -1,23 +1,13 @@
-name: (WIP) Auto deploy prebuilt site
-on: workflow_dispatch
-## OLD
-# on:
-#   workflow_dispatch:
-#   push:
-#     branches:
-#       - 'main'
-#     paths:
-#       - 'resources/public/**'
+name: Site build and deploy
 
-## NEW
-## See that npm only jumps to action when the source is rebuilt, not static files (html, css)
-# on:
-#   workflow_dispatch:
-#   push:
-#     branches:
-#       - 'main'
-#     paths:
-#       - 'src/**'
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - 'main'
+    paths:
+      - 'src/**'
+      - 'resources/public/**'
 
 jobs:
   deploy:
@@ -26,9 +16,19 @@ jobs:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     steps:
+
       - uses: actions/checkout@v3
 
-      - name: Cache node
+      - name: Check path updates
+        uses: dorny/paths-filter@v2.10.2
+        id: pf
+        with:
+          filters: |
+            source:
+              - 'src/**'
+
+      - name: Access NPM cache
+        if: steps.pf.outputs.source == 'true'
         uses: actions/cache@v3.0.1
         env:
           cache-name: cache-node-modules
@@ -36,12 +36,13 @@ jobs:
           path: ~/.npm
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
 
-      - name: Build
+      - name: Build source
+        if: steps.pf.outputs.source == 'true'
         run: |
           npm install
           npm run release
 
-      - name: S3 Deploy
+      - name: S3 deploy, CloudFront invalidation
         uses: Reggionick/s3-deploy@v3.1.1
         with:
           folder: resources/public
