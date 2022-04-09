@@ -1,11 +1,12 @@
 name: Deploy prebuilt site
-on:
-  workflow_dispatch:
-  push:
-    branches:
-      - 'main'
-    paths:
-      - 'resources/public/**'
+on: workflow_dispatch
+# on:
+#   workflow_dispatch:
+#   push:
+#     branches:
+#       - 'main'
+#     paths:
+#       - 'resources/public/**'
 jobs:
   deploy:
     runs-on: ubuntu-latest
