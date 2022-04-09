@@ -14,7 +14,6 @@ pom.xml.asc
 .cpcache/
 
 # Remove some dev files
-/resources/public/css/screen.css
 /resources/public/js/compiled
 .shadow-cljs
 node_modules
