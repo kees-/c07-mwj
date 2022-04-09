@@ -69,3 +69,26 @@ a {
   font-weight: 500;
   vertical-align: 6%;
 }
+
+.backmatter {
+  position: fixed;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  bottom: .6rem;
+  width: 100vw;
+  color: silver;
+  /* background: aquamarine; */
+}
+
+#owner {
+  font-weight: 400;
+}
+
+#copyright {
+  font-family: 'Unna', serif;
+  font-style: italic;
+  font-weight: 700;
+  /* background: greenyellow; */
+  display: inline-block;
+}
