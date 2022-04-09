@@ -42,7 +42,21 @@ jobs:
           npm install
           npm run release
 
-      - name: S3 deploy, CloudFront invalidation
+      - name: (Soft) deploy, invalidation
+        if: steps.pf.outputs.source == 'false'
+        uses: Reggionick/s3-deploy@v3.1.1
+        with:
+          folder: resources/public
+          bucket: ${{ secrets.S3_BUCKET }}
+          bucket-region: ${{ secrets.S3_BUCKET_REGION }}
+          dist-id: ${{ secrets.CLOUDFRONT_DIST_ID }}
+          invalidation: /*
+          delete-removed: false
+          no-cache: no-cache # OR: no-store, must-revalidate
+          private: true
+
+      - name: (Hard) deploy, invalidation
+        if: steps.pf.outputs.source == 'true'
         uses: Reggionick/s3-deploy@v3.1.1
         with:
           folder: resources/public
@@ -51,6 +65,5 @@ jobs:
           dist-id: ${{ secrets.CLOUDFRONT_DIST_ID }}
           invalidation: /*
           delete-removed: true
-          # Use this parameter to specify Cache-Control: no-cache, no-store, must-revalidate header
-          # no-cache: # optional
+          no-cache: no-cache # OR: no-store, must-revalidate
           private: true
