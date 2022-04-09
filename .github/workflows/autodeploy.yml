@@ -1,4 +1,4 @@
-name: [WIP] Auto deploy prebuilt site
+name: (WIP) Auto deploy prebuilt site
 on: workflow_dispatch
 ## OLD
 # on:
