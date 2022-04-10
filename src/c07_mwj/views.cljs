@@ -14,7 +14,6 @@
   (let [year (.getFullYear (js/Date.))
         owner [:span#owner "frg"]]
     [:div.backmatter
-     ; [:small>article#copyright cr-str " hello"]
      [:small>article#copyright (char 169) " " owner " " year]]))
 
 (defn citrus
