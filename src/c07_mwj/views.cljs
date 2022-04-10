@@ -1,7 +1,9 @@
 (ns c07-mwj.views
   (:require
+   [reagent.core :as reagent]
    [re-frame.core :as re-frame]
-   [c07-mwj.subs :as subs]))
+   [c07-mwj.subs :as subs]
+   ["contactjs" :as contact]))
 
 (defn logo
   []
