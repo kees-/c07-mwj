@@ -78,7 +78,6 @@ a {
   bottom: .6rem;
   width: 100vw;
   color: silver;
-  /* background: aquamarine; */
 }
 
 #owner {
@@ -89,6 +88,5 @@ a {
   font-family: 'Unna', serif;
   font-style: italic;
   font-weight: 700;
-  /* background: greenyellow; */
   display: inline-block;
 }
