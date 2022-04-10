@@ -29,6 +29,7 @@ a {
 
 #citrus-cage {
   display: block;
+  position: relative;
   margin: 13rem auto;
   padding: .25rem;
   max-width: 10rem;

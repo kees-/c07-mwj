@@ -28,20 +28,29 @@
        [:article (str (char 4305))]])
     :component-did-mount
     (fn []
-      (let [el (js/document.getElementById "citrus-cage")
-            opts (clj->js {})
-            move (fn [element x y]
-                   (set! (.. element -style -transform)
-                     (str "translate(" x "px, " y "px)")))]
+      (let [zero (fn [v] (if (= "" v) 0 (js/parseFloat v)))
+            el (js/document.getElementById "citrus-cage")
+            opts (clj->js {:DEBUG false})
+            position (fn [element x2 y2]
+                       (set! (.. element -style -left)
+                         (-> (.. element -style -left) zero (+ x2) (str "px")))
+                       (set! (.. element -style -top)
+                         (-> (.. element -style -top) zero (+ y2) (str "px"))))
+            translate (fn [element x y]
+                        (set! (.. element -style -transform)
+                          (str "translate(" x "px, " y "px)")))]
         (contact/PointerListener. el opts)
-        (.addEventListener el "panend"
-         (fn [e]
-           (move el 0 0)))
         (.addEventListener el "pan"
          (fn [e]
-           (move el
+           (translate el
                  (.. e -detail -global -deltaX)
-                 (.. e -detail -global -deltaY))))))}))
+                 (.. e -detail -global -deltaY))))
+        (.addEventListener el "panend"
+         (fn [e]
+           (translate el 0 0)
+           (position el
+                     (.. e -detail -global -deltaX)
+                     (.. e -detail -global -deltaY))))))}))
 
 (defn main-panel []
   (let []
