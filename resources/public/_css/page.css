@@ -20,7 +20,14 @@ a {
   color: inherit;
 }
 
-.citrus-cage {
+.no-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+#citrus-cage {
   display: block;
   margin: 13rem auto;
   padding: .25rem;
@@ -35,7 +42,7 @@ a {
   box-shadow: 3px 3px 0 blanchedalmond;
 }
 
-.citrus-cage article {
+#citrus-cage article {
   color: orange;
   font-size: 3.7rem;
   animation: orange-glow 2s ease-in-out infinite alternate;

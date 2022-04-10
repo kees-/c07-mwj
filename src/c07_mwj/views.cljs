@@ -20,9 +20,28 @@
 
 (defn citrus
   []
-  [:div.citrus-cage
-   [:span "Now in bloom"]
-   [:article (str (char 4305))]])
+  (reagent/create-class
+   {:reagent-render
+    (fn []
+      [:div#citrus-cage.no-select
+       [:span "Now in bloom"]
+       [:article (str (char 4305))]])
+    :component-did-mount
+    (fn []
+      (let [el (js/document.getElementById "citrus-cage")
+            opts (clj->js {})
+            move (fn [element x y]
+                   (set! (.. element -style -transform)
+                     (str "translate(" x "px, " y "px)")))]
+        (contact/PointerListener. el opts)
+        (.addEventListener el "panend"
+         (fn [e]
+           (move el 0 0)))
+        (.addEventListener el "pan"
+         (fn [e]
+           (move el
+                 (.. e -detail -global -deltaX)
+                 (.. e -detail -global -deltaY))))))}))
 
 (defn main-panel []
   (let []
