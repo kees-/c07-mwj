@@ -27,10 +27,13 @@ a {
   user-select: none;
 }
 
-#citrus-cage {
+.hidden {
+  display: none;
+}
+
+.charm {
   display: block;
   position: relative;
-  margin: 13rem auto;
   padding: .25rem;
   max-width: 10rem;
   background: #1C1E1E;
@@ -43,7 +46,7 @@ a {
   box-shadow: 3px 3px 0 blanchedalmond;
 }
 
-#citrus-cage article {
+.charm article {
   color: orange;
   font-size: 3.7rem;
   animation: orange-glow 2s ease-in-out infinite alternate;

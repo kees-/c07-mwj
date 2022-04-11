@@ -5,6 +5,14 @@
    [c07-mwj.subs :as subs]
    ["contactjs" :as contact]))
 
+(defn spawn-x
+  [v]
+  (+ v (rand (- (.. js/window -innerWidth) (* 3 v)))))
+
+(defn spawn-y
+  [v]
+  (+ v (rand (- (.. js/window -innerHeight) (* 3 v)))))
+
 (defn logo
   []
   [:a.logo-container
@@ -18,18 +26,21 @@
     [:div.backmatter
      [:small>article#copyright (char 169) " " owner " " year]]))
 
-(defn citrus
-  []
+(defn charm
+  [{:keys [id glyph title]
+    :or {title "Hello!"}}]
   (reagent/create-class
    {:reagent-render
     (fn []
-      [:div#citrus-cage.no-select
-       [:span "Now in bloom"]
-       [:article (str (char 4305))]])
+      [:div.charm.no-select.hidden
+       {:id id
+        :style {:top 0 :left 0}}
+       [:span title]
+       [:article (str (char glyph))]])
     :component-did-mount
     (fn []
       (let [zero (fn [v] (if (= "" v) 0 (js/parseFloat v)))
-            el (js/document.getElementById "citrus-cage")
+            el (js/document.getElementById id)
             opts (clj->js {:DEBUG false})
             position (fn [element x2 y2]
                        (set! (.. element -style -left)
@@ -39,6 +50,9 @@
             translate (fn [element x y]
                         (set! (.. element -style -transform)
                           (str "translate(" x "px, " y "px)")))]
+        (set! (.. el -style -left) (-> el .-offsetWidth spawn-x (str "px")))
+        (set! (.. el -style -top) (-> el .-offsetHeight spawn-y (str "px")))
+        (-> el .-classList (.remove "hidden"))
         (contact/PointerListener. el opts)
         (.addEventListener el "pan"
          (fn [e]
@@ -56,5 +70,5 @@
   (let []
     [:div
      [logo]
-     [citrus]
+     [charm {:id "citrus-cage" :glyph 4305 :title "Now in bloom"}]
      [footer]]))
