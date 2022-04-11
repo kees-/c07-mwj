@@ -21,7 +21,7 @@
      [logo]
      [charms/charm
       {:id "citrus-cage"}
-      [:div.charm.no-select.hidden
+      [:div
        [:span "Now in bloom"]
        [:article (str (char 4305))]]]
      [footer]]))

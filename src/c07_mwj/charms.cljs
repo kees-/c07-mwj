@@ -19,7 +19,8 @@
     (fn []
       (-> content
           add-props
-          (assoc-in [1 :id] id)))
+          (assoc-in [1 :id] id)
+          (update-in [1 :class] str " charm no-select hidden")))
     :component-did-mount
     (fn []
       (let [zero (fn [v] (if (= "" v) 0 (js/parseFloat v)))
