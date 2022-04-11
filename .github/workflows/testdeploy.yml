@@ -1,4 +1,4 @@
-name: Site build and deploy
+name: build and deploy to a draft bucket
 
 on: workflow_dispatch
 
