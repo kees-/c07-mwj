@@ -1,0 +1,62 @@
+name: Site build and deploy
+
+on: workflow_dispatch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    steps:
+
+      - uses: actions/checkout@v3
+
+      - name: Check path updates
+        uses: dorny/paths-filter@v2.10.2
+        id: pf
+        with:
+          filters: |
+            source:
+              - 'src/**'
+
+      - name: Access NPM cache
+        if: steps.pf.outputs.source == 'true'
+        uses: actions/cache@v3.0.1
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Build source
+        if: steps.pf.outputs.source == 'true'
+        run: |
+          npm install
+          npm run release
+
+      - name: (Soft) deploy, invalidation
+        if: steps.pf.outputs.source == 'false'
+        uses: Reggionick/s3-deploy@v3.1.1
+        with:
+          folder: resources/public
+          bucket: ${{ secrets.S3_TEST_BUCKET }}
+          bucket-region: ${{ secrets.S3_TEST_BUCKET_REGION }}
+          # dist-id: ${{ secrets.CLOUDFRONT_DIST_ID }}
+          # invalidation: /*
+          delete-removed: false
+          # no-cache: no-cache # OR: no-store, must-revalidate
+          private: true
+
+      - name: (Hard) deploy, invalidation
+        if: steps.pf.outputs.source == 'true'
+        uses: Reggionick/s3-deploy@v3.1.1
+        with:
+          folder: resources/public
+          bucket: ${{ secrets.S3_TEST_BUCKET }}
+          bucket-region: ${{ secrets.S3_TEST_BUCKET_REGION }}
+          # dist-id: ${{ secrets.CLOUDFRONT_DIST_ID }}
+          # invalidation: /*
+          delete-removed: true
+          # no-cache: no-cache
+          private: true
