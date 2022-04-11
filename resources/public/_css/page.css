@@ -20,9 +20,20 @@ a {
   color: inherit;
 }
 
-.citrus-cage {
+.no-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.hidden {
+  display: none;
+}
+
+.charm {
   display: block;
-  margin: 13rem auto;
+  position: relative;
   padding: .25rem;
   max-width: 10rem;
   background: #1C1E1E;
@@ -35,7 +46,7 @@ a {
   box-shadow: 3px 3px 0 blanchedalmond;
 }
 
-.citrus-cage article {
+.charm article {
   color: orange;
   font-size: 3.7rem;
   animation: orange-glow 2s ease-in-out infinite alternate;
@@ -52,6 +63,7 @@ a {
 
 .logo-container {
   position: fixed;
+  z-index: 10;
   top: 5%;
   left: 2rem;
   border-left: 1.5px solid blanchedalmond;
@@ -73,6 +85,7 @@ a {
 
 .backmatter {
   position: fixed;
+  z-index: 10;
   display: flex;
   flex-direction: row;
   justify-content: center;

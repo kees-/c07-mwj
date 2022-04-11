@@ -1,7 +1,7 @@
 (ns c07-mwj.views
   (:require
-   [re-frame.core :as re-frame]
-   [c07-mwj.subs :as subs]))
+   [c07-mwj.charms :as charms]
+   [c07-mwj.logic :as logic]))
 
 (defn logo
   []
@@ -11,20 +11,13 @@
 
 (defn footer
   []
-  (let [year (.getFullYear (js/Date.))
-        owner [:span#owner "frg"]]
+  (let [owner [:span#owner "frg"]]
     [:div.backmatter
-     [:small>article#copyright (char 169) " " owner " " year]]))
-
-(defn citrus
-  []
-  [:div.citrus-cage
-   [:span "Now in bloom"]
-   [:article (str (char 4305))]])
+     [:small>article#copyright (char 169) " " owner " " (logic/year)]]))
 
 (defn main-panel []
   (let []
     [:div
      [logo]
-     [citrus]
+     [charms/charm {:id "citrus-cage" :glyph 4305 :title "Now in bloom"}]
      [footer]]))

@@ -17,6 +17,7 @@ pom.xml.asc
 /resources/public/js/compiled
 .shadow-cljs
 node_modules
+yarn-error.log
 
 # MacOS
 .DS_Store
