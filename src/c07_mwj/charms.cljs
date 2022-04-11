@@ -4,17 +4,22 @@
    [reagent.core :as reagent]
    ["contactjs" :as contact]))
 
+(defn add-props
+  [hiccup]
+  (if (map? (hiccup 1))
+    hiccup
+    (reduce into [[(hiccup 0)] [{}] (rest hiccup)])))
+
 (defn charm
-  [{:keys [id glyph title]
-    :or {title "Hello!"}}]
+  [{:keys [id]
+    :or {}}
+   content]
   (reagent/create-class
    {:reagent-render
     (fn []
-      [:div.charm.no-select.hidden
-       {:id id
-        :style {:top 0 :left 0}}
-       [:span title]
-       [:article (str (char glyph))]])
+      (-> content
+          add-props
+          (assoc-in [1 :id] id)))
     :component-did-mount
     (fn []
       (let [zero (fn [v] (if (= "" v) 0 (js/parseFloat v)))

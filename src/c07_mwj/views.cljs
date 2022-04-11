@@ -19,5 +19,9 @@
   (let []
     [:div
      [logo]
-     [charms/charm {:id "citrus-cage" :glyph 4305 :title "Now in bloom"}]
+     [charms/charm
+      {:id "citrus-cage"}
+      [:div.charm.no-select.hidden
+       [:span "Now in bloom"]
+       [:article (str (char 4305))]]]
      [footer]]))
