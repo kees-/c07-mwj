@@ -2,6 +2,8 @@
   (:require
    [c07-mwj.logic :as logic]
    [reagent.core :as reagent]
+   [oops.core :as oops
+    :refer [oget oset!]]
    ["contactjs" :as contact]))
 
 (defn add-props
