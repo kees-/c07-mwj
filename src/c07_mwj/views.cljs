@@ -11,7 +11,7 @@
 
 (defn footer
   []
-  (let [owner [:span#owner "frg"]]
+  (let [owner [:span#owner "Front Room Gallery"]]
     [:div.backmatter
      [:small>article#copyright (char 169) " " owner " " (logic/year)]]))
 
@@ -19,5 +19,9 @@
   (let []
     [:div
      [logo]
-     [charms/charm {:id "citrus-cage" :glyph 4305 :title "Now in bloom"}]
+     [charms/charm
+      {:id "citrus-cage"}
+      [:div.koi-1
+       [:span "Now in bloom"]
+       [:article.glyph (str (char 4305))]]]
      [footer]]))

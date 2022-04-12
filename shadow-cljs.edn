@@ -3,7 +3,8 @@
  :dependencies
  [[reagent "1.1.0"]
   [re-frame "1.2.0"]
-  [binaryage/devtools "1.0.4"]]
+  [binaryage/devtools "1.0.4"]
+  [binaryage/oops "0.7.2"]]
 
  :dev-http
  {8280 "resources/public"

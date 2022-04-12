@@ -1,0 +1,29 @@
+/* ====== Koi ============================================================== */
+
+.koi-1 {
+  padding: .25rem;
+  max-width: 10rem;
+  background: #1C1E1E;
+  color: darkorange;
+  font-family: sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  text-align: center;
+  border: 1px solid floralwhite;
+  box-shadow: 3px 3px 0 blanchedalmond;
+}
+
+.koi-1 .glyph {
+  color: orange;
+  font-size: 3.7rem;
+  animation: orange-glow 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes orange-glow {
+  from {
+    text-shadow: 0 0 12px rgba(255, 215, 0, 0.7);
+  }
+  to {
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+  }
+}
