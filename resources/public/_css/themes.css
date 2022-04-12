@@ -1,4 +1,4 @@
-/* Koi */
+/* ====== Koi ============================================================== */
 
 .koi-1 {
   padding: .25rem;
@@ -16,14 +16,14 @@
 .koi-1 .glyph {
   color: orange;
   font-size: 3.7rem;
-  animation: orange-glow 2s ease-in-out infinite alternate;
+  animation: orange-glow 2.5s ease-in-out infinite alternate;
 }
 
 @keyframes orange-glow {
   from {
-    text-shadow: 0 0 11px rgba(255, 215, 0, 0.7);
+    text-shadow: 0 0 12px rgba(255, 215, 0, 0.7);
   }
   to {
-    text-shadow: 0 0 7px rgba(255, 215, 0, 0.5);
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
   }
 }
