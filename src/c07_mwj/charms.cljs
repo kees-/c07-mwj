@@ -87,19 +87,24 @@
         ; Function which fires WHILE DRAGGING a charm
         (.addEventListener me "pan"
          (fn [e]
-           ; (js/console.info (boundary-collisions me))
-           (let [{:keys [colliding? t? b? l? r?]} (boundary-collisions me)]
+           (let [{:keys [colliding? t? b? l? r?]
+                  :as evvals} (boundary-collisions me)
+                 d (oget e "detail.live.direction")
+                 x (oget e "detail.global.deltaX")
+                 y (oget e "detail.global.deltaY")
+                 ox (nan-zero (oget me "style.left"))
+                 oy (nan-zero (oget me "style.top"))]
              (if colliding?
                (cond
-                 t? (translate me (oget e "detail.global.deltaX") 1)
-                 b? (translate me (oget e "detail.global.deltaX")
-                                  (- 1 (oget js/window "innerHeight")))
-                 l? (translate me 1 (oget e "detail.global.deltaY"))
-                 r? (translate me (- 1 (oget js/window "innerWidth"))
-                                  (oget e "detail.global.deltaY")))
-               (translate me
-                 (oget e "detail.global.deltaX")
-                 (oget e "detail.global.deltaY"))))))
+                 t? (translate me x (* -1 oy))
+                 b? (translate me
+                     x
+                     (- (logic/wh) oy (oget me "offsetHeight") -1))
+                 l? (translate me (* -1 ox) y)
+                 r? (translate me
+                     (- (logic/ww) ox (oget me "offsetWidth") -1)
+                     y))
+               (translate me x y)))))
 ;; =============================================================================
 ;; =============================================================================
         ; Function which fires when user RELEASES charm
