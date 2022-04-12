@@ -13,13 +13,24 @@
     hiccup
     (reduce into [[(hiccup 0)] [{}] (rest hiccup)])))
 
-(defn colliding-boundary?
-  [el]
+(defn boundary-collisions
+  "Returns whether an element is colliding with outer walls, and which ones"
+  [element]
   (let [corners (fn [o] (map #(oget+ o %) ["top" "bottom" "left" "right"]))
-        [t b l r] (-> el .getBoundingClientRect corners)
+        [t b l r] (-> element .getBoundingClientRect corners)
         vw (oget js/window "innerWidth")
-        vh (oget js/window "innerHeight")]
-    (or (< t 0) (< vh b) (< l 0) (< vw r))))
+        vh (oget js/window "innerHeight")
+        collisions (-> {}
+                       (assoc :t? (< t 0))
+                       (assoc :b? (< vh b))
+                       (assoc :l? (< l 0))
+                       (assoc :r? (< vw r)))]
+    (if (every? false? (vals collisions))
+      (assoc collisions :colliding? false)
+      (assoc collisions :colliding? true))))
+
+(comment
+ (boundary-collisions (js/document.getElementById "citrus-cage")))
 
 ;; NOTES
 ;  Set the ID for the charm in the options map (:id), not in the component.
@@ -71,13 +82,26 @@
         (-> me (oget "classList") (.remove "hidden"))
         ; Create the all-important all-hearing Contact.js listener
         (contact/PointerListener. me opts)
+;; =============================================================================
+;; ========== DANGER ZONE!!! ===================================================
         ; Function which fires WHILE DRAGGING a charm
         (.addEventListener me "pan"
          (fn [e]
-           (when-not (colliding-boundary? me)
-             (translate me
-               (oget e "detail.global.deltaX")
-               (oget e "detail.global.deltaY")))))
+           ; (js/console.info (boundary-collisions me))
+           (let [{:keys [colliding? t? b? l? r?]} (boundary-collisions me)]
+             (if colliding?
+               (cond
+                 t? (translate me (oget e "detail.global.deltaX") 1)
+                 b? (translate me (oget e "detail.global.deltaX")
+                                  (- 1 (oget js/window "innerHeight")))
+                 l? (translate me 1 (oget e "detail.global.deltaY"))
+                 r? (translate me (- 1 (oget js/window "innerWidth"))
+                                  (oget e "detail.global.deltaY")))
+               (translate me
+                 (oget e "detail.global.deltaX")
+                 (oget e "detail.global.deltaY"))))))
+;; =============================================================================
+;; =============================================================================
         ; Function which fires when user RELEASES charm
         ; Ending a pan 'locks in' the (x,y) offset of the gesture
         ; The next pan will begin with a delta of (0, 0), so set that now
