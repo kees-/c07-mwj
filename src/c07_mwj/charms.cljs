@@ -3,7 +3,7 @@
    [c07-mwj.logic :as logic]
    [reagent.core :as reagent]
    [oops.core :as oops
-    :refer [oget oset!]]
+    :refer [oget oget+ oset!]]
    ["contactjs" :as contact]))
 
 (defn add-props
@@ -12,6 +12,14 @@
   (if (map? (hiccup 1))
     hiccup
     (reduce into [[(hiccup 0)] [{}] (rest hiccup)])))
+
+(defn colliding-boundary?
+  [el]
+  (let [corners (fn [o] (map #(oget+ o %) ["top" "bottom" "left" "right"]))
+        [t b l r] (-> el .getBoundingClientRect corners)
+        vw (oget js/window "innerWidth")
+        vh (oget js/window "innerHeight")]
+    (or (< t 0) (< vh b) (< l 0) (< vw r))))
 
 ;; NOTES
 ;  Set the ID for the charm in the options map (:id), not in the component.
@@ -66,9 +74,10 @@
         ; Function which fires WHILE DRAGGING a charm
         (.addEventListener me "pan"
          (fn [e]
-           (translate me
-             (oget e "detail.global.deltaX")
-             (oget e "detail.global.deltaY"))))
+           (when-not (colliding-boundary? me)
+             (translate me
+               (oget e "detail.global.deltaX")
+               (oget e "detail.global.deltaY")))))
         ; Function which fires when user RELEASES charm
         ; Ending a pan 'locks in' the (x,y) offset of the gesture
         ; The next pan will begin with a delta of (0, 0), so set that now
