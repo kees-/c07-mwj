@@ -8,26 +8,23 @@
 
 (defn add-props
   "Add an empty parameter map to hiccup component if not present."
-  [hiccup]
-  (if (map? (hiccup 1))
-    hiccup
-    (reduce into [[(hiccup 0)] [{}] (rest hiccup)])))
+  [c]
+  (if (map? (c 1))
+    c
+    (reduce into [[(c 0)] [{}] (rest c)])))
 
 (defn boundary-collisions
   "Returns whether an element is colliding with outer walls, and which ones"
   [element]
   (let [; 2-step parse js obj to symbols
         corners (fn [o] (map #(oget+ o %) ["top" "bottom" "left" "right"]))
-        [t b l r] (-> element .getBoundingClientRect corners)
-        ; Map of booleans for each side element is touching
-        collisions (-> {}
-                       (assoc :t? (< t 0))
-                       (assoc :b? (< (logic/wh) b))
-                       (assoc :l? (< l 0))
-                       (assoc :r? (< (logic/ww) r)))]
-    ; Whether any collision value is true
-    (assoc collisions
-     :colliding? (not-every? false? (vals collisions)))))
+        [t b l r] (-> element .getBoundingClientRect corners)]
+    ; Map of booleans for each side the element is touching
+    (-> {}
+        (assoc :t? (< t 0))
+        (assoc :b? (< (logic/wh) b))
+        (assoc :l? (< l 0))
+        (assoc :r? (< (logic/ww) r)))))
 
 ;; NOTES
 ;  Set the ID for the charm in the options map (:id), not in the component.
@@ -55,7 +52,7 @@
          nan-zero (fn [v] (if (= "" v) 0 (js/parseFloat v)))
          ; Avoid eye rolling errors when setting CSS values
          px (fn [v] (str v "px"))
-         ; Hacky `this` ?
+         ; Hacky `this`
          me (js/document.getElementById id)
          ; A set of options for the element's gesture listener
          ; https://biodiv.github.io/contactjs/documentation/contact-js/#Options
@@ -82,14 +79,28 @@
         ; Function which fires WHILE DRAGGING a charm
         (.addEventListener me "pan"
          (fn [e]
-           (let [{:keys [colliding? t? b? l? r?]} (boundary-collisions me)
+           (let [; Refer above
+                 {:keys [t? b? l? r?]} (boundary-collisions me)
+                 ; A string "up" "right" etc for most recent gesture direction
                  d (oget e "detail.live.direction")
+                 ; Shorthand event access
                  x (oget e "detail.global.deltaX")
                  y (oget e "detail.global.deltaY")
+                 ; Two lines to get paramters of element AS IT IS
                  bcr (.getBoundingClientRect me)
                  [w h l t] (map #(oget+ bcr %) ["width" "height" "left" "top"])
+                 ; For getting CSS properties
                  x-origin (nan-zero (oget me "style.left"))
                  y-origin (nan-zero (oget me "style.top"))]
+             ; The element will be repositioned no matter if it is colliding.
+             ; Each branch corresponds to a side.
+             ; Logic responds to gestures that move AWAY from the current side.
+             ; If movement is occur at all upon collision,
+             ; the element sticks to the wall.
+             ; In such cases the easiest thing to do is adjust another factor.
+             ; Setting .-left and .-top allow the element to compensate when
+             ; it would otherwise be dragged off the page.
+             ; Performance could be worse and the visual is really not bad.
              (translate me
               (cond
                 l? (if (= d "right")
