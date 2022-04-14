@@ -24,4 +24,16 @@
       [:div.koi-1
        [:span "Now in bloom"]
        [:article.glyph (str (char 4305))]]]
+     [:pre
+      {:style {:width 200
+               :position "fixed"
+               :left 10
+               :bottom 40}}
+      "xpos: " [:span#xpos ""]]
+     [:pre
+      {:style {:width 200
+               :position "fixed"
+               :left 210
+               :bottom 40}}
+      "ypos: " [:span#ypos ""]]
      [footer]]))

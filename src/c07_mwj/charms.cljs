@@ -25,7 +25,6 @@
                        (assoc :l? (< l 0))
                        (assoc :r? (< (logic/ww) r)))]
     ; Map of booleans for each side the element is touching
-    (js/console.info collisions)
     collisions))
 
 ;; NOTES
@@ -58,7 +57,7 @@
          me (js/document.getElementById id)
          ; A set of options for the element's gesture listener
          ; https://biodiv.github.io/contactjs/documentation/contact-js/#Options
-         opts #js{:DEBUG true}
+         opts #js{:DEBUG false}
          ; Directly set the X and Y value of an element's transform property
          translate (fn [el x y]
                      (oset! el "style.transform"
@@ -103,27 +102,25 @@
               (cond
                 l? (if (= d "right")
                      (do (left me (- x l))
-                       (js/console.info "Hitting left, moving right")
                        x)
                      (* -1 x-origin))
                 r? (if (= d "left")
                      (do (left me (- (logic/ww) w x))
-                       (js/console.info "Hitting right, moving left")
                        x)
                      (- (logic/ww) x-origin (oget me "offsetWidth") -1))
                 :else x)
               (cond
                 t? (if (= d "down") ; should be "down" Contact.js BUG
                      (do (top me (- y t))
-                       (js/console.info "Hitting top, moving down")
                        y)
                      (* -1 y-origin))
                 b? (if (= d "up") ; should be "up" Contact.js BUG
                      (do (top me (- (logic/wh) h y))
-                       (js/console.info "Hitting bottom, moving up")
                        y)
                      (- (logic/wh) y-origin (oget me "offsetHeight") -1))
-                :else y)))))
+                :else y))
+             (oset! (js/document.getElementById "xpos") "textContent" l)
+             (oset! (js/document.getElementById "ypos") "textContent" t))))
         ; Function which fires when user RELEASES charm
         ; Ending a pan 'locks in' the (x,y) offset of the gesture
         ; The next pan will begin with a delta of (0, 0), so set that now
