@@ -113,11 +113,11 @@
                      (- (logic/ww) x-origin (oget me "offsetWidth") -1))
                 :else x)
               (cond
-                t? (if (= d "up") ; should be "down" Contact.js BUG
+                t? (if (= d "down") ; should be "down" Contact.js BUG
                      (do (oset! me "style.top" (str (- y t) "px"))
                        y)
                      (* -1 y-origin))
-                b? (if (= d "down") ; should be "up" Contact.js BUG
+                b? (if (= d "up") ; should be "up" Contact.js BUG
                      (do (oset! me "style.top" (str (- (logic/wh) h y) "px"))
                        y)
                      (- (logic/wh) y-origin (oget me "offsetHeight") -1))
