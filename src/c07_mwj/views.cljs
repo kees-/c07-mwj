@@ -1,7 +1,8 @@
 (ns c07-mwj.views
   (:require
    [c07-mwj.charms :as charms]
-   [c07-mwj.logic :as logic]))
+   [c07-mwj.logic :as logic]
+   [c07-mwj.debug :as debug]))
 
 (defn logo
   []
@@ -24,4 +25,7 @@
       [:div.koi-1
        [:span "Now in bloom"]
        [:article.glyph (str (char 4305))]]]
+     ; DEBUG
+     #_[debug/pointer-elements]
+     #_[debug/xy-elements]
      [footer]]))
