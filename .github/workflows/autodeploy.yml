@@ -36,6 +36,13 @@ jobs:
           path: ~/.npm
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
 
+      - name: Access shadow-cljs cache
+        if: steps.pf.outputs.source == 'true'
+        uses: actions/cache@v3.0.1
+        with:
+          path: .shadow-cljs
+          key: ${{ runner.os }}-shadow-cljs-${{ github.sha }}
+
       - name: Build source
         if: steps.pf.outputs.source == 'true'
         run: |
