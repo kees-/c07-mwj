@@ -25,6 +25,7 @@
       [:div.koi-1
        [:span "Now in bloom"]
        [:article.glyph (str (char 4305))]]]
+     ; DEBUG
      [debug/pointer-elements]
      [debug/xy-elements]
      [footer]]))

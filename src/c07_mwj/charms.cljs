@@ -120,16 +120,21 @@
                        y)
                      (- (logic/wh) y-origin (oget me "offsetHeight") -1))
                 :else y))
+             ; DEBUG
              (debug/xy-sfx l t)
-             (debug/pntr-sfx e))))
+             (debug/pntr-sfx e "pan"))))
         ; Function which fires when user RELEASES charm
         ; Ending a pan 'locks in' the (x,y) offset of the gesture
         ; The next pan will begin with a delta of (0, 0), so set that now
         (.addEventListener me "panend"
          (fn [e]
-           ; Update the element's base position
-           (left me (-> me .getBoundingClientRect (oget "x")))
-           (top me (-> me .getBoundingClientRect (oget "y")))
-           ; Revert the transform to original position
-           (translate me 0 0)
-           (debug/pntr-sfx e)))))}))
+           (let [x (-> me .getBoundingClientRect (oget "x"))
+                 y (-> me .getBoundingClientRect (oget "y"))]
+             ; Update the element's base position
+             (left me x)
+             (top me y)
+             ; Revert the transform to original position
+             (translate me 0 0)
+             ; DEBUG
+             (debug/xy-sfx x y)
+             (debug/pntr-sfx e "panend"))))))}))

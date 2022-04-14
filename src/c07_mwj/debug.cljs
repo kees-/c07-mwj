@@ -9,6 +9,12 @@
     {:style {:width 200
              :position "fixed"
              :left 10
+             :bottom 90}}
+    "actv? " [:span#actv]]
+   [:pre
+    {:style {:width 200
+             :position "fixed"
+             :left 10
              :bottom 80}}
     "xpnt: " [:span#xpnt]]
    [:pre
@@ -52,12 +58,13 @@
   (oset! (js/document.getElementById "ypos") "textContent" ypos))
 
 (defn pntr-sfx
-  [e]
-  (oset! (js/document.getElementById "xpnt") "textcontent"
+  [e m]
+  (oset! (js/document.getElementById "xpnt") "textContent"
    (oget e "detail.contact.currentPointerEvent.clientX"))
-  (oset! (js/document.getElementById "ypnt") "textcontent"
+  (oset! (js/document.getElementById "ypnt") "textContent"
    (oget e "detail.contact.currentPointerEvent.clientY"))
-  (oset! (js/document.getElementById "dltx") "textcontent"
+  (oset! (js/document.getElementById "dltx") "textContent"
    (oget e "detail.global.deltaX"))
-  (oset! (js/document.getElementById "dlty") "textcontent"
-   (oget e "detail.global.deltaY")))
+  (oset! (js/document.getElementById "dlty") "textContent"
+   (oget e "detail.global.deltaY"))
+  (oset! (js/document.getElementById "actv") "textContent" m))
