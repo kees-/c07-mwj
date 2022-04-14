@@ -99,21 +99,24 @@
              ; Setting .-left and .-top allow the element to compensate when
              ; it would otherwise be dragged off the page.
              ; Performance could be worse and the visual is really not bad.
+             ; The +1/-1 values for d != -_? seem to fix strange location bugs.
              (translate me
               (cond
                 l? (if (= d "right")
                      (do (left me (- x l))
                        x)
-                     (* -1 x-origin))
+                     (- (* -1 x-origin) 1))
                 r? (if (= d "left")
                      (do (left me (- (logic/ww) w x))
                        x)
                      (- (logic/ww) x-origin (oget me "offsetWidth") -1))
                 :else x)
               (cond
+                t? (if (= d "down")
                      (do (top me (- y t))
                        y)
-                     (* -1 y-origin))
+                     (- (* -1 y-origin) 1))
+                b? (if (= d "up")
                      (do (top me (- (logic/wh) h y))
                        y)
                      (- (logic/wh) y-origin (oget me "offsetHeight") -1))
