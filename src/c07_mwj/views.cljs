@@ -1,7 +1,8 @@
 (ns c07-mwj.views
   (:require
    [c07-mwj.charms :as charms]
-   [c07-mwj.logic :as logic]))
+   [c07-mwj.logic :as logic]
+   [c07-mwj.debug :as debug]))
 
 (defn logo
   []
@@ -24,16 +25,6 @@
       [:div.koi-1
        [:span "Now in bloom"]
        [:article.glyph (str (char 4305))]]]
-     [:pre
-      {:style {:width 200
-               :position "fixed"
-               :left 10
-               :bottom 40}}
-      "xpos: " [:span#xpos ""]]
-     [:pre
-      {:style {:width 200
-               :position "fixed"
-               :left 210
-               :bottom 40}}
-      "ypos: " [:span#ypos ""]]
+     [debug/pointer-elements]
+     [debug/xy-elements]
      [footer]]))

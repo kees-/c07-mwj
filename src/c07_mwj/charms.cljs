@@ -1,6 +1,7 @@
 (ns c07-mwj.charms
   (:require
    [c07-mwj.logic :as logic]
+   [c07-mwj.debug :as debug]
    [reagent.core :as reagent]
    [oops.core :as oops
     :refer [oget oget+ oset!]]
@@ -119,8 +120,8 @@
                        y)
                      (- (logic/wh) y-origin (oget me "offsetHeight") -1))
                 :else y))
-             (oset! (js/document.getElementById "xpos") "textContent" l)
-             (oset! (js/document.getElementById "ypos") "textContent" t))))
+             (debug/xy-sfx l t)
+             (debug/pntr-sfx e))))
         ; Function which fires when user RELEASES charm
         ; Ending a pan 'locks in' the (x,y) offset of the gesture
         ; The next pan will begin with a delta of (0, 0), so set that now
@@ -130,4 +131,5 @@
            (left me (-> me .getBoundingClientRect (oget "x")))
            (top me (-> me .getBoundingClientRect (oget "y")))
            ; Revert the transform to original position
-           (translate me 0 0)))))}))
+           (translate me 0 0)
+           (debug/pntr-sfx e)))))}))
