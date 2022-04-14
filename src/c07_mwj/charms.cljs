@@ -57,21 +57,17 @@
          ; A set of options for the element's gesture listener
          ; https://biodiv.github.io/contactjs/documentation/contact-js/#Options
          opts #js{:DEBUG false}
-         ; Add X and Y to a given element's current LEFT and TOP properties
-         position (fn [el x y]
-                    (oset! el "style.left"
-                      (-> el (oget "style.left") nan-zero (+ x) px))
-                    (oset! el "style.top"
-                      (-> el (oget "style.top") nan-zero (+ y) px)))
          ; Directly set the X and Y value of an element's transform property
          translate (fn [el x y]
                      (oset! el "style.transform"
-                       (str "translate(" x "px, " y "px)")))]
+                       (str "translate(" x "px, " y "px)")))
+         left (fn [el v] (oset! el "style.left" (str v "px")))
+         top (fn [el v] (oset! el "style.top" (str v "px")))]
         ; Spawn the charm at a random point
         ; The element width is used to calculate not spawning near the edge
         ; Upcoming, a coord option to override random spawning
-        (oset! me "style.left" (-> me (oget "offsetWidth") logic/spawn-x px))
-        (oset! me "style.top" (-> me (oget "offsetHeight") logic/spawn-y px))
+        (left me (-> me (oget "offsetWidth") logic/spawn-x))
+        (top me (-> me (oget "offsetHeight") logic/spawn-y))
         ; Reveal the charm in the rendered DOM
         (-> me (oget "classList") (.remove "hidden"))
         ; Create the all-important all-hearing Contact.js listener
@@ -104,21 +100,21 @@
              (translate me
               (cond
                 l? (if (= d "right")
-                     (do (oset! me "style.left" (px (- x l)))
+                     (do (left me (- x l))
                        x)
                      (* -1 x-origin))
                 r? (if (= d "left")
-                     (do (oset! me "style.left" (px (- (logic/ww) w x)))
+                     (do (left me (- (logic/ww) w x))
                        x)
                      (- (logic/ww) x-origin (oget me "offsetWidth") -1))
                 :else x)
               (cond
                 t? (if (= d "down") ; should be "down" Contact.js BUG
-                     (do (oset! me "style.top" (str (- y t) "px"))
+                     (do (top me (- y t))
                        y)
                      (* -1 y-origin))
                 b? (if (= d "up") ; should be "up" Contact.js BUG
-                     (do (oset! me "style.top" (str (- (logic/wh) h y) "px"))
+                     (do (top me (- (logic/wh) h y))
                        y)
                      (- (logic/wh) y-origin (oget me "offsetHeight") -1))
                 :else y)))))
@@ -128,8 +124,7 @@
         (.addEventListener me "panend"
          (fn [e]
            ; Update the element's base position
-           (position me
-             (oget e "detail.global.deltaX")
-             (oget e "detail.global.deltaY"))
+           (left me (-> me .getBoundingClientRect (oget "x")))
+           (top me (-> me .getBoundingClientRect (oget "y")))
            ; Revert the transform to original position
            (translate me 0 0)))))}))
