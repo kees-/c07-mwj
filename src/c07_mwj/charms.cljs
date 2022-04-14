@@ -132,8 +132,8 @@
            (let [x (-> me .getBoundingClientRect (oget "x"))
                  y (-> me .getBoundingClientRect (oget "y"))]
              ; Update the element's base position
-             (left me x)
-             (top me y)
+             (left me (if (< x 0) -1 x))
+             (top me (if (< y 0) -1 y))
              ; Revert the transform to original position
              (translate me 0 0)
              ; DEBUG
