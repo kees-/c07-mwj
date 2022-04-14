@@ -11,7 +11,7 @@
 
 (defn footer
   []
-  (let [owner [:span#owner "Front Room Gallery"]]
+  (let [owner [:span#owner "FRG LLC"]]
     [:div.backmatter
      [:small>article#copyright (char 169) " " owner " " (logic/year)]]))
 
