@@ -18,13 +18,15 @@
   [element]
   (let [; 2-step parse js obj to symbols
         corners (fn [o] (map #(oget+ o %) ["top" "bottom" "left" "right"]))
-        [t b l r] (-> element .getBoundingClientRect corners)]
+        [t b l r] (-> element .getBoundingClientRect corners)
+        collisions (-> {}
+                       (assoc :t? (< t 0))
+                       (assoc :b? (< (logic/wh) b))
+                       (assoc :l? (< l 0))
+                       (assoc :r? (< (logic/ww) r)))]
     ; Map of booleans for each side the element is touching
-    (-> {}
-        (assoc :t? (< t 0))
-        (assoc :b? (< (logic/wh) b))
-        (assoc :l? (< l 0))
-        (assoc :r? (< (logic/ww) r)))))
+    (js/console.info collisions)
+    collisions))
 
 ;; NOTES
 ;  Set the ID for the charm in the options map (:id), not in the component.
@@ -56,7 +58,7 @@
          me (js/document.getElementById id)
          ; A set of options for the element's gesture listener
          ; https://biodiv.github.io/contactjs/documentation/contact-js/#Options
-         opts #js{:DEBUG false}
+         opts #js{:DEBUG true}
          ; Directly set the X and Y value of an element's transform property
          translate (fn [el x y]
                      (oset! el "style.transform"
@@ -101,20 +103,24 @@
               (cond
                 l? (if (= d "right")
                      (do (left me (- x l))
+                       (js/console.info "Hitting left, moving right")
                        x)
                      (* -1 x-origin))
                 r? (if (= d "left")
                      (do (left me (- (logic/ww) w x))
+                       (js/console.info "Hitting right, moving left")
                        x)
                      (- (logic/ww) x-origin (oget me "offsetWidth") -1))
                 :else x)
               (cond
                 t? (if (= d "down") ; should be "down" Contact.js BUG
                      (do (top me (- y t))
+                       (js/console.info "Hitting top, moving down")
                        y)
                      (* -1 y-origin))
                 b? (if (= d "up") ; should be "up" Contact.js BUG
                      (do (top me (- (logic/wh) h y))
+                       (js/console.info "Hitting bottom, moving up")
                        y)
                      (- (logic/wh) y-origin (oget me "offsetHeight") -1))
                 :else y)))))
