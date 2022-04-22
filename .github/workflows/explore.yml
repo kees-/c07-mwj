@@ -13,4 +13,4 @@ jobs:
         run: |
           pwd
           ls /
-          tree -dL 2 /
+          tree -daL 3 /home
