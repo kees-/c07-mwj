@@ -12,7 +12,13 @@ jobs:
       - name: Test activities
         run: |
           pwd
-          ls /
-          tree -daL 3 /home
+          echo ~
           echo "====================================================="
+          echo "tree -daL 2 /home"
+          tree -daL 2 /home
+          echo "====================================================="
+          echo "tree -daL 2 ."
           tree -daL 2 .
+          echo "====================================================="
+          echo "tree -daL 3 /home/runner/work"
+          tree -daL 3 /home/runner/work
