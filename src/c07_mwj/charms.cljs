@@ -33,12 +33,13 @@
 ;
 ;  The mindset here is that you can theoretically pass any component to the
 ;  charmer. As long as its children are compatible with the movement gestures,
-;  most HTML should be safe. The status of form components are unknown.
+;  most HTML should be safe. The status of normal form components is unknown.
 (defn charm
   "Return a generic charm element. Pass a map of params and a hiccup form."
   [{:keys [id] :or {}} content]
   (reagent/create-class
-   {:reagent-render
+   {:display-name id
+    :reagent-render
     (fn []
       (-> content
           ; Add property map if missing
@@ -52,8 +53,6 @@
       (let
         [; Avoid NaN error preventing addition. Empty string equivalent to 0
          nan-zero (fn [v] (if (= "" v) 0 (js/parseFloat v)))
-         ; Avoid eye rolling errors when setting CSS values
-         px (fn [v] (str v "px"))
          ; Hacky `this`
          me (js/document.getElementById id)
          ; A set of options for the element's gesture listener
