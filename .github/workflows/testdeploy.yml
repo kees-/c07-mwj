@@ -20,6 +20,15 @@ jobs:
             source:
               - 'src/**'
 
+      - name: Access jar cache (maven)
+        if: steps.pf.outputs.source == 'true'
+        uses: actions/cache@v3.0.1
+        with:
+          path: /root/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/shadow-cljs.edn', '.github/workflows/**') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
       - name: Access NPM cache
         if: steps.pf.outputs.source == 'true'
         uses: actions/cache@v3.0.1
@@ -28,6 +37,8 @@ jobs:
         with:
           path: ~/.npm
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-
 
       - name: Access shadow-cljs cache
         if: steps.pf.outputs.source == 'true'
@@ -35,6 +46,8 @@ jobs:
         with:
           path: .shadow-cljs
           key: ${{ runner.os }}-shadow-cljs-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-shadow-cljs-
 
       - name: Build source
         if: steps.pf.outputs.source == 'true'
