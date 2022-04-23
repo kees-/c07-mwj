@@ -4,6 +4,8 @@
    [c07-mwj.debug :as debug]
    [reagent.core :as reagent]
    [reagent.dom :as rdom]
+   [c07-mwj.rf :as rf
+    :refer [>evt <sub]]
    [oops.core :as oops
     :refer [oget oget+ oset!]]
    ["contactjs" :as contact]))
@@ -82,7 +84,12 @@
          (fn [e]
            (do
             (js/console.info "Registering a tap")
-            (-> me (oget "classList") (.add "newclass")))))
+            ; Testing out generic events
+            (>evt [::rf/inc-depth])
+            ; Hide all child elements upon entering a charm
+            (doseq [child (.-children me)] (.add (.-classList child) "hidden"))
+            ; Add a new class which transitions to full screen
+            (-> me .-classList (.add "newclass")))))
         ; Function which fires WHILE DRAGGING a charm
         (.addEventListener me "pan"
          (fn [e]
