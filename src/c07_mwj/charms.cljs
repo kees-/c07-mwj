@@ -3,6 +3,7 @@
    [c07-mwj.logic :as logic]
    [c07-mwj.debug :as debug]
    [reagent.core :as reagent]
+   [reagent.dom :as rdom]
    [oops.core :as oops
     :refer [oget oget+ oset!]]
    ["contactjs" :as contact]))
@@ -49,12 +50,12 @@
           ; Append necessary classes for charm display
           (update-in [1 :class] str " charm no-select hidden")))
     :component-did-mount
-    (fn []
+    (fn [this]
       (let
         [; Avoid NaN error preventing addition. Empty string equivalent to 0
          nan-zero (fn [v] (if (= "" v) 0 (js/parseFloat v)))
-         ; Hacky `this`
-         me (js/document.getElementById id)
+         ; Practical equivalent of `this`
+         me (rdom/dom-node this)
          ; A set of options for the element's gesture listener
          ; https://biodiv.github.io/contactjs/documentation/contact-js/#Options
          opts #js{:DEBUG false}
