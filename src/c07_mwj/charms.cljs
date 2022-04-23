@@ -70,10 +70,19 @@
         ; Upcoming, a coord option to override random spawning
         (left me (-> me (oget "offsetWidth") logic/spawn-x))
         (top me (-> me (oget "offsetHeight") logic/spawn-y))
+        ; Sets per-element pixel values
+        ; Necessary for size transitions
+        (oset! me "style.!width" (str (oget me "offsetWidth") "px"))
+        (oset! me "style.!height" (str (oget me "offsetHeight") "px"))
         ; Reveal the charm in the rendered DOM
         (-> me (oget "classList") (.remove "hidden"))
         ; Create the all-important all-hearing Contact.js listener
         (contact/PointerListener. me opts)
+        (.addEventListener me "tap"
+         (fn [e]
+           (do
+            (js/console.info "Registering a tap")
+            (-> me (oget "classList") (.add "newclass")))))
         ; Function which fires WHILE DRAGGING a charm
         (.addEventListener me "pan"
          (fn [e]
