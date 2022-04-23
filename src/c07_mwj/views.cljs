@@ -2,6 +2,7 @@
   (:require
    [c07-mwj.charms :as charms]
    [c07-mwj.logic :as logic]
+   [c07-mwj.utilities :as util]
    [c07-mwj.debug :as debug]))
 
 (defn logo
