@@ -6,6 +6,7 @@
    [c07-mwj.utilities :as util]
    [c07-mwj.debug :as debug]))
 
+;; ========== CONTENTS =========================================================
 (defn logo
   []
   [:a.logo-container
@@ -18,25 +19,50 @@
     [:div.backmatter
      [:small>article#copyright (char 169) " " owner " " (logic/year)]]))
 
+;; ========== CHARMS ===========================================================
+(defn mailer
+  []
+  [charms/charm
+   {:id "mailer"
+    :container
+    [:div.koi-2
+     [:svg
+      {:viewBox "0 0 24 24"
+       :width "156"
+       :style {:fill "lemonchiffon"}}
+      [:path {:d assets/mail-svg}]]
+     [:span "Mailer"]]
+    :contains
+    [[:div
+      {:style {:display "block"
+               :margin "0 auto"
+               :width "max-content"}}
+      [util/form-loader "5fd5468ccdc040ff3b12248e"]]]}])
+
+(defn newt
+  []
+  [charms/charm
+   {:id "newt"
+    :container
+    [:div.koi-1
+     [:span "Now this"]
+     [:article.glyph "0"]]}])
+
+;; ========== PANELS ===========================================================
 (defn main-panel []
-  (let []
-    [:<>
-     [logo]
-     [charms/charm
-      {:id "citrus-cage"}
-      [:div.koi-2
-       [:svg
-        {:viewBox "0 0 24 24"
-         :width "156"
-         :style {:fill "lemonchiffon"}}
-        [:path {:d assets/mail-svg}]]
-       [:span "Mailer"]]]
-     [charms/charm
-      {:id "newt"}
-      [:div.koi-1
-       [:span "Now this"]
-       [:article.glyph "2"]]]
-     ; DEBUG
-     #_[debug/pointer-elements]
-     #_[debug/xy-elements]
-     [footer]]))
+  [:<>
+   [logo]
+   [mailer]
+   [newt]
+   ; DEBUG
+   #_[debug/pointer-elements]
+   #_[debug/xy-elements]
+   [footer]])
+
+(comment
+ [:div
+  {:id "flodesk"
+   :style {:display "block"
+           :margin "0 auto"
+           :width "max-content"}}
+  [util/form-loader "5fd5468ccdc040ff3b12248e"]])

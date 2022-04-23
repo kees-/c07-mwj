@@ -37,12 +37,12 @@
 ;  most HTML should be safe. The status of normal form components is unknown.
 (defn charm
   "Return a generic charm element. Pass a map of params and a hiccup form."
-  [{:keys [id] :or {}} content]
+  [{:keys [id container contains] :or {contains []}}]
   (reagent/create-class
    {:display-name id
     :reagent-render
     (fn []
-      (-> content
+      (-> container
           ; Add property map if missing
           add-props
           ; Set the ID of the component
