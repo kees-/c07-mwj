@@ -14,17 +14,15 @@
 
 (defn ^:dev/after-load mount-root []
   (re-frame/clear-subscription-cache!)
+  (gsap/registerPlugin Draggable)
   (let [root-el (.getElementById js/document "app")]
     (rdom/unmount-component-at-node root-el)
-    (rdom/render [views/main-panel] root-el)))
+    (rdom/render [views/main-panel] root-el))
+  (Draggable/create ".charm"
+   #js{:bounds "#app"
+       :onClick #(js/console.log (char 9786))}))
 
 (defn init []
   (re-frame/dispatch-sync [::rf/initialize-db])
   (dev-setup)
-  (gsap/registerPlugin Draggable)
-  (mount-root)
-  (Draggable/create
-   ".gs"
-   (-> {:type "x,y"
-        :container "#app"}
-       clj->js)))
+  (mount-root))
