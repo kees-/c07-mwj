@@ -4,7 +4,9 @@
    [c07-mwj.config :as config]
    [c07-mwj.rf :as rf]
    [reagent.dom :as rdom]
-   [re-frame.core :as re-frame]))
+   [re-frame.core :as re-frame]
+   ["gsap$gsap" :as gsap]
+   ["gsap/Draggable$Draggable" :as Draggable]))
 
 (defn dev-setup []
   (when config/debug?
@@ -12,9 +14,13 @@
 
 (defn ^:dev/after-load mount-root []
   (re-frame/clear-subscription-cache!)
+  (gsap/registerPlugin Draggable)
   (let [root-el (.getElementById js/document "app")]
     (rdom/unmount-component-at-node root-el)
-    (rdom/render [views/main-panel] root-el)))
+    (rdom/render [views/main-panel] root-el))
+  (Draggable/create ".charm"
+   #js{:bounds "#app"
+       :onClick #(js/console.log (char 9786))}))
 
 (defn init []
   (re-frame/dispatch-sync [::rf/initialize-db])
