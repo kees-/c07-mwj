@@ -21,4 +21,10 @@
 (defn init []
   (re-frame/dispatch-sync [::rf/initialize-db])
   (dev-setup)
-  (mount-root))
+  (gsap/registerPlugin Draggable)
+  (mount-root)
+  (Draggable/create
+   ".gs"
+   (-> {:type "x,y"
+        :container "#app"}
+       clj->js)))

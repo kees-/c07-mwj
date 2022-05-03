@@ -91,6 +91,24 @@
    ; [citrus]
    [bottle]
    [mail]
+   [:div.gs
+    {:style {:width 100
+             :height 100
+             :position "fixed"
+             :left 100
+             :top 100
+             :background "forestgreen"
+             :border "4px solid white"
+             :border-radius 8}}]
+   [:div.gs
+    {:style {:width 100
+             :height 100
+             :position "fixed"
+             :left 250
+             :top 100
+             :background "dodgerblue"
+             :border "4px solid silver"
+             :border-radius 8}}]
    ; DEBUG
    #_[debug/pointer-elements]
    #_[debug/xy-elements]
