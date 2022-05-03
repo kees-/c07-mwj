@@ -5,8 +5,7 @@
 
 ;; ========== INITIAL SETUP ====================================================
 (def default-db
-  {:nav
-   {:charm-depth 0}})
+  {})
 
 (def >evt re-frame/dispatch)
 (def <sub (comp deref re-frame/subscribe))
@@ -16,16 +15,3 @@
  ::initialize-db
  (fn [_ _]
    default-db))
-
-(reg-event-db
- ::inc-depth
- (fn [db _]
-   (update-in db [:nav :charm-depth] inc)))
-
-(reg-event-db
- ::dec-depth
- (fn [db _]
-   (update-in db [:nav :charm-depth] dec)))
-
-;; ========== SUBS =============================================================
-(reg-sub ::depth #(-> % :nav :charm-depth))

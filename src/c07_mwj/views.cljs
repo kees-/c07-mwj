@@ -48,12 +48,22 @@
      [:span "Now this"]
      [:article.glyph "0"]]}])
 
+(defn citrus
+  []
+  [charms/charm
+   {:id "citrus"
+    :container
+    [:div.koi-1
+     [:article.glyph (char 4305)]
+     [:span "Now in bloom"]]}])
+
 ;; ========== PANELS ===========================================================
 (defn main-panel []
   [:<>
    [logo]
-   [mailer]
-   [newt]
+   ; [mailer]
+   ; [newt]
+   [citrus]
    ; DEBUG
    #_[debug/pointer-elements]
    #_[debug/xy-elements]
