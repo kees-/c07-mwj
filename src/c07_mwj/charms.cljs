@@ -3,6 +3,7 @@
    [c07-mwj.logic :as logic]
    [c07-mwj.debug :as debug]
    [reagent.core :as reagent]
+   [reagent.dom :as rdom]
    [oops.core :as oops
     :refer [oget oget+ oset!]]
    ["contactjs" :as contact]))
@@ -36,12 +37,12 @@
 ;  most HTML should be safe. The status of normal form components is unknown.
 (defn charm
   "Return a generic charm element. Pass a map of params and a hiccup form."
-  [{:keys [id] :or {}} content]
+  [{:keys [id container contains] :or {contains []}}]
   (reagent/create-class
    {:display-name id
     :reagent-render
     (fn []
-      (-> content
+      (-> container
           ; Add property map if missing
           add-props
           ; Set the ID of the component
@@ -49,12 +50,12 @@
           ; Append necessary classes for charm display
           (update-in [1 :class] str " charm no-select hidden")))
     :component-did-mount
-    (fn []
+    (fn [this]
       (let
         [; Avoid NaN error preventing addition. Empty string equivalent to 0
          nan-zero (fn [v] (if (= "" v) 0 (js/parseFloat v)))
-         ; Hacky `this`
-         me (js/document.getElementById id)
+         ; Practical equivalent of `this`
+         me (rdom/dom-node this)
          ; A set of options for the element's gesture listener
          ; https://biodiv.github.io/contactjs/documentation/contact-js/#Options
          opts #js{:DEBUG false}
@@ -69,10 +70,25 @@
         ; Upcoming, a coord option to override random spawning
         (left me (-> me (oget "offsetWidth") logic/spawn-x))
         (top me (-> me (oget "offsetHeight") logic/spawn-y))
+        ; Sets per-element pixel values
+        ; Necessary for size transitions
+        (oset! me "style.!width" (str (oget me "offsetWidth") "px"))
+        (oset! me "style.!height" (str (oget me "offsetHeight") "px"))
         ; Reveal the charm in the rendered DOM
         (-> me (oget "classList") (.remove "hidden"))
         ; Create the all-important all-hearing Contact.js listener
         (contact/PointerListener. me opts)
+        ;; IGNORED
+        ; (.addEventListener me "tap"
+        ;  (fn [e]
+        ;    (do
+        ;     (js/console.info "Registering a tap")
+        ;     ; Testing out generic events
+        ;     (>evt [::rf/inc-depth])
+        ;     ; Hide all child elements upon entering a charm
+        ;     (doseq [child (.-children me)] (.add (.-classList child) "hidden"))
+        ;     ; Add a new class which transitions to full screen
+        ;     (-> me .-classList (.add "newclass")))))
         ; Function which fires WHILE DRAGGING a charm
         (.addEventListener me "pan"
          (fn [e]

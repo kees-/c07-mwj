@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Unna:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
+/* CSS reset */
 *, *::before, *::after {box-sizing: border-box;}
 * {margin: 0;}
 html {height: 100%;}
@@ -32,7 +33,8 @@ a {
 
 .charm {
   display: block;
-  position: relative;
+  position: fixed;
+  width: max-content;
 }
 
 .logo-container {
