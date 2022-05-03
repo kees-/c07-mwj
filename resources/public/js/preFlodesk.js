@@ -6,3 +6,10 @@
   w[n] = w[n] || fn;
 })(window, document, 'script', 'https://assets.flodesk.com', '/universal', 'fd');
 
+// (function() {
+//   window.FlodeskObject = 'fd';
+//   var fn = function() {
+//     (window['fd'].q = window['fd'].q || []).push(arguments);
+//   };
+//   window['fd'] = window['fd'] || fn;
+// })();
