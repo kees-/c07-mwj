@@ -10,7 +10,6 @@
   border: 1px solid floralwhite;
   box-shadow: 3px 3px 0 blanchedalmond;
 }
-
 .koi-1 .glyph {
   color: orange;
   font-size: 3.7rem;
@@ -27,6 +26,32 @@
   font-size: 2rem;
 }
 
+.koi-3 {
+  background: #1C1E1E;
+  font-family: 'Unna', serif;
+  border: 2px solid ghostwhite;
+  border-radius: 1px;
+}
+.koi-3 div {
+  border: 4px dotted azure;
+  margin: .4rem;
+  padding: .5rem;
+}
+.koi-3 div img {
+  outline: 1px solid ghostwhite;
+  padding: .4rem;
+  box-shadow: 0 0 4px azure;
+}
+
+.koi-4 {
+  outline: 3px solid lightgrey;
+}
+.koi-4 img {
+  margin: .2rem;
+  padding: .3rem;
+  border: 1px solid lightgrey;
+}
+
 /* ====== UTILITIES ======================================================== */
 @keyframes orange-glow {
   from {
@@ -35,6 +60,14 @@
   to {
     text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
   }
+}
+
+.jchar {
+  text-justify: inter-character;
+}
+
+.jdist {
+  text-justify: inter-distribute;
 }
 
 /* temporary */
