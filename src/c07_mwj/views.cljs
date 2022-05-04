@@ -82,6 +82,20 @@
             :width 54
             :height 63}]]}])
 
+(defn bloom
+  []
+  [charms/charm
+   {:id "blue"
+    :container
+    [:div.koi-5
+     [:span "Blooming"]
+     [:div.trigram
+      [:table>tbody
+       [:tr [:td] [:td.split] [:td]]
+       [:tr [:td] [:td] [:td]]
+       [:tr [:td] [:td] [:td]]
+       [:tr [:td {:colspan 3}]]]]]}])
+
 ;; ========== PANELS ===========================================================
 (defn main-panel []
   [:<>
@@ -91,6 +105,7 @@
    ; [citrus]
    [bottle]
    [mail]
+   [bloom]
    ; DEBUG
    #_[debug/pointer-elements]
    #_[debug/xy-elements]
