@@ -13,6 +13,12 @@
    {:href "/"}
    [:article.logo "MWJ"]])
 
+(defn ph-number
+  []
+  [:a.ph
+   {:href "tel:+13108481990"}
+   [:article "+1 310 848 1990"]])
+
 (defn footer
   []
   (let [owner [:span#owner "FRG LLC"]]
@@ -163,6 +169,7 @@
 (defn main-panel []
   [:<>
    [logo]
+   [ph-number]
    ; [mailer]
    ; [newt]
    ; [citrus]

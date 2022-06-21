@@ -64,6 +64,17 @@ a {
   vertical-align: 6%;
 }
 
+.ph {
+  position: fixed;
+  z-index: 10;
+  bottom: 5%;
+  left: 2.5rem;
+  font-size: 1.6rem;
+  font-family: 'Unna', serif;
+  font-weight: 700;
+  line-height: 1;
+}
+
 .backmatter {
   position: fixed;
   z-index: 10;
