@@ -14,10 +14,12 @@
 
 (defn ^:dev/after-load mount-root []
   (re-frame/clear-subscription-cache!)
+  ; Look!
   (gsap/registerPlugin Draggable)
   (let [root-el (.getElementById js/document "app")]
     (rdom/unmount-component-at-node root-el)
     (rdom/render [views/main-panel] root-el))
+  ; Look!
   (Draggable/create ".charm"
    #js{:bounds "#app"
        :onClick #(js/console.log (char 9786))}))
