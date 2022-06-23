@@ -1,0 +1,107 @@
+[{:id "mailer"
+  :parent nil
+  :exterior [:div.koi-2
+             [:svg
+              {:viewBox "0 0 24 24"
+               :width "156"
+               :style {:fill "lemmonchiffon"}}
+              [:path {:d "M20 4H4c-1.103 0-2 .897-2 2v12c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V6c0-1.103-.897-2-2-2zm0 2v.511l-8 6.223-8-6.222V6h16zM4 18V9.044l7.386 5.745a.994.994 0 0 0 1.228 0L20 9.044 20.002 18H4z"}]]
+             [:span "Mailer"]]
+  :interior [:div "This is the future site of a mail form."]}
+ {:id "newt"
+  :parent nil
+  :exterior [:div.koi-1
+             [:span "Now this"
+              [:article.glyph "0"]]]
+  :interior nil}
+ {:id "citrus"
+  :parent nil
+  :exterior [:div.koi-1
+             [:article.glyph "ბ"]
+             [:span "Now in bloom"]]
+  :interior nil}
+ {:id "bottle"
+  :parent nil
+  :exterior [:div.koi-3
+             [:div
+              [:img
+               {:src "/_asset/bottle.svg"
+                :alt "A couplet: A well contained emptiness, empty kept, your beautiful bottle, shared from the top."
+                :draggable false
+                :width 180
+                :height 265}]]]
+  :interior nil}
+ {:id "mail"
+  :parent nil
+  :exterior [:div.koi-4
+             [:img
+              {:src "/_asset/mail.gif"
+               :alt "A gif: You'll Get Mail"
+               :draggable false
+               :width 54
+               :height 63}]]
+  :interior nil}
+ {:id "bloom"
+  :parent nil
+  :exterior [:div.koi-5
+             [:span "Settling"]
+             [:div.trigram.trigram2
+              [:table>tbody
+               [:tr [:td] [:td.split] [:td]]
+               [:tr [:td] [:td] [:td]]
+               [:tr [:td] [:td.split] [:td]]
+               [:tr [:td {:colSpan 3}]]]]]
+  :interior nil}
+ {:id "leaf-1"
+  :parent nil
+  :exterior [:div
+             {:style {:padding "1rem .5rem"
+                      :background "black"
+                      :border "2px solid #262626"}}
+             [:div
+              {:style {:padding ".5rem"
+                       :background "#1a1a1a"
+                       :border "2px groove #4d4d4d"}}
+              [:div
+               {:style {:padding ".2rem"
+                        :background "#262626"
+                        :border "1px groove silver"}}
+               [:video
+                {:src "/_asset/leaf-1.webm"
+                 :type "video/webm"
+                 :width 135
+                 :height 135
+                 :autoPlay ""
+                 :playsInline ""
+                 :loop "loop"
+                 :muted "muted"}]]]]
+  :interior nil}
+ {:id "leaf-2"
+  :parent nil
+  :exterior [:div
+             {:style {:border "2px outset #004D4D"
+                      :border-radius 1
+                      :padding ".4rem"
+                      :background "#033"}}
+             [:div
+              {:style {:border "3px inset teal"
+                       :padding ".25rem"
+                       :background "lightgrey"}}
+              [:img
+               {:src "/_asset/leaf-2.png"
+                :height 60}]]]}
+ {:id "leaf-3"
+  :parent nil
+  :exterior [:div
+             {:style {:border "2px outset sienna"
+                      :border-radius 1
+                      :padding ".4rem"
+                      :background "#c9641d"}}
+             [:div
+              {:style {:border "3px inset darksalmon"
+                       :padding ".25rem"
+                       :background "wheat"}}
+              [:img
+               {:src "/_asset/leaf-3.png"
+                :width 50}]]]
+  :interior nil}]
