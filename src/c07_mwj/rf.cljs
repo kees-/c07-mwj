@@ -15,3 +15,27 @@
  ::initialize-db
  (fn [_ _]
    default-db))
+
+(reg-event-db
+ ::load-charm-list
+ (fn [db [_ data]]
+   (assoc-in db [:charm-list] data)))
+
+(reg-event-db
+ ::temporary
+ (fn [_ _]
+   (js/console.info "Acknowledging temporary event")))
+
+;; ========== SUBS =============================================================
+(reg-sub
+ ::full-list
+ (fn [db]
+   (:charm-list db)))
+
+(reg-sub
+ ::get-charm
+ :<- [::full-list]
+ (fn [list [_ id]]
+   (->> list
+        (filter #(= id (:id %)))
+        first)))
