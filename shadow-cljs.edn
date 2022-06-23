@@ -20,10 +20,10 @@
    :modules
    {:app {:init-fn c07-mwj.core/init}}
    :devtools
-   {:preloads [#_day8.re-frame-10x.preload]
+   {:preloads [day8.re-frame-10x.preload]
     :http-root "resources/public"}
    :dev
    {:compiler-options
     {:closure-defines
-     {#_re-frame.trace.trace-enabled? true
-      #_day8.re-frame.tracing.trace-enabled? true}}}}}}
+     {re-frame.trace.trace-enabled? true
+      day8.re-frame.tracing.trace-enabled? true}}}}}}
