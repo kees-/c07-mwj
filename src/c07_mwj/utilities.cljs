@@ -5,8 +5,19 @@
    [ajax.edn :as edn]
    [reagent.core :as reagent]
    [goog.net.jsloader :as jsl]
-   [goog.html.legacyconversions :as legacy]))
+   [goog.html.legacyconversions :as legacy]
+   [c07-mwj.rf :as rf :refer [>evt <sub]]))
 
+;; ========== DATA REQUESTS ====================================================
+(defn load!
+  [source]
+  (ajax/GET source
+    {:response-format (edn/edn-response-format)
+     :handler #(>evt [::rf/load-charm-list %])
+     :error-handler #(println "The request failed. Response:" %)
+     :finally #(>evt [::rf/temporary])}))
+
+;; ========== SCRIPT LOADING ===================================================
 (defn filter-loaded
   "Take a map of boolean functions to URI locations (local/remote)
    of javascript script files. Returns a list of URIs

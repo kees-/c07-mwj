@@ -2,6 +2,7 @@
   (:require
    [c07-mwj.views :as views]
    [c07-mwj.config :as config]
+   [c07-mwj.utilities :as utils]
    [c07-mwj.rf :as rf]
    [reagent.dom :as rdom]
    [re-frame.core :as re-frame]
@@ -26,5 +27,6 @@
 
 (defn init []
   (re-frame/dispatch-sync [::rf/initialize-db])
+  (utils/load! "/_data/charms.edn")
   (dev-setup)
   (mount-root))
