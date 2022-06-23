@@ -5,10 +5,11 @@
    [goog.net.jsloader :as jsl]
    [goog.html.legacyconversions :as legacy]))
 
-(defn filter-loaded [scripts]
+(defn filter-loaded
   "Take a map of boolean functions to URI locations (local/remote)
    of javascript script files. Returns a list of URIs
    corresponding to false checks."
+  [scripts]
   (reduce (fn [acc [loaded? src]]
             (if (loaded?) acc (conj acc src)))
           []

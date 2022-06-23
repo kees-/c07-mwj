@@ -22,6 +22,6 @@
   (+ v (rand (- (ww) (* 2.5 v)))))
 
 (defn spawn-y
-  [v]
   "Find a suitable random spawn point pixel value"
+  [v]
   (+ v (rand (- (wh) (* 2.5 v)))))
