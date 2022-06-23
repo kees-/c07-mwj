@@ -1,6 +1,8 @@
 (ns c07-mwj.utilities
   (:require
    [clojure.string :as str]
+   [ajax.core :as ajax]
+   [ajax.edn :as edn]
    [reagent.core :as reagent]
    [goog.net.jsloader :as jsl]
    [goog.html.legacyconversions :as legacy]))
