@@ -177,6 +177,7 @@
    ; [bloom]
    [mail]
    [leaf-1]
+   #_[charms/rf-charm "leaf-1"]
    [leaf-2]
    [leaf-3]
    ; DEBUG
