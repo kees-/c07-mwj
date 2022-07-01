@@ -1,12 +1,11 @@
 (ns c07-mwj.charms
   (:require
    [c07-mwj.logic :as logic]
-   [c07-mwj.debug :as debug]
+   #_[c07-mwj.debug :as debug]
    [c07-mwj.rf :as rf :refer [<sub >evt]]
    [reagent.core :as reagent]
    [reagent.dom :as rdom]
-   [oops.core :as oops
-    :refer [oget oget+ oset!]]))
+   [oops.core :as oops :refer [oget oset!]]))
 
 (defn add-props
   "Add an empty parameter map to hiccup component if not present."
@@ -35,10 +34,12 @@
         ; Spawn the charm at a random point
         ; The element width is used to calculate not spawning near the edge
         ; Upcoming, a coord option to override random spawning
-        (oset! this "style.left"
-         (-> this (oget "offsetWidth") logic/spawn-x (str "px")))
-        (oset! this "style.top"
-         (-> this (oget "offsetHeight") logic/spawn-y (str "px")))))}))
+        (oset! this
+               "style.left"
+               (-> this (oget "offsetWidth") logic/spawn-x (str "px")))
+        (oset! this
+               "style.top"
+               (-> this (oget "offsetHeight") logic/spawn-y (str "px")))))}))
 
 (defn rf-charm
   "Component for a charm"
@@ -51,7 +52,7 @@
         (-> exterior
             add-props
             (assoc-in [1 :id] id)
-            (update-in [1 :class] str "charm no-select")))
+            (update-in [1 :class] str "charm no-select hidden")))
       :component-did-mount
       (fn [me]
         (let [this (rdom/dom-node me)]
@@ -60,4 +61,5 @@
                  (-> this (oget "offsetWidth") logic/spawn-x (str "px")))
           (oset! this
                  "style.top"
-                 (-> this (oget "offsetHeight") logic/spawn-y (str "px")))))})))
+                 (-> this (oget "offsetHeight") logic/spawn-y (str "px")))
+          (.remove (.-classList this) "hidden")))})))

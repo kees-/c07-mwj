@@ -1,21 +1,9 @@
 (ns c07-mwj.utilities
   (:require
    [clojure.string :as str]
-   [ajax.core :as ajax]
-   [ajax.edn :as edn]
    [reagent.core :as reagent]
    [goog.net.jsloader :as jsl]
-   [goog.html.legacyconversions :as legacy]
-   [c07-mwj.rf :as rf :refer [>evt <sub]]))
-
-;; ========== DATA REQUESTS ====================================================
-(defn load!
-  [source]
-  (ajax/GET source
-    {:response-format (edn/edn-response-format)
-     :handler #(>evt [::rf/load-charm-list %])
-     :error-handler #(println "The request failed. Response:" %)
-     :finally #(>evt [::rf/temporary])}))
+   [goog.html.legacyconversions :as legacy]))
 
 ;; ========== SCRIPT LOADING ===================================================
 (defn filter-loaded
