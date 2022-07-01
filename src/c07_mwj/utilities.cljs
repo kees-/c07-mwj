@@ -5,6 +5,7 @@
    [goog.net.jsloader :as jsl]
    [goog.html.legacyconversions :as legacy]))
 
+;; ========== SCRIPT LOADING ===================================================
 (defn filter-loaded
   "Take a map of boolean functions to URI locations (local/remote)
    of javascript script files. Returns a list of URIs
@@ -22,18 +23,18 @@
   [{:keys [scripts loading loaded]}]
   (let [loaded? (reagent/atom false)]
     (reagent/create-class
-      {:component-did-mount
-       (fn []
-         (let [not-loaded (->> scripts
-                               filter-loaded
-                               (map legacy/trustedResourceUrlFromString)
-                               clj->js)]
-           (.then (jsl/safeLoadMany not-loaded)
-                  #(reset! loaded? true)
-                  #(js/console.info "Scripts not loaded."))))
-       :reagent-render
-       (fn []
-         (if @loaded? loaded loading))})))
+     {:component-did-mount
+      (fn []
+        (let [not-loaded (->> scripts
+                              filter-loaded
+                              (map legacy/trustedResourceUrlFromString)
+                              clj->js)]
+          (.then (jsl/safeLoadMany not-loaded)
+                 #(reset! loaded? true)
+                 #(js/console.info "Scripts not loaded."))))
+      :reagent-render
+      (fn []
+        (if @loaded? loaded loading))})))
 
 ;; ========== FLODESK LOGIC ====================================================
 (defn timestamp
@@ -50,7 +51,7 @@
   [{:keys [file]}]
   (let [base "https://assets.flodesk.com/universal"
         v (timestamp)]
-   (str/join [base file "?v=" v])))
+    (str/join [base file "?v=" v])))
 
 (def externals
   "The specific local and remote script locations
