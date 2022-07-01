@@ -27,7 +27,6 @@
               [:img
                {:src "/_asset/bottle.svg"
                 :alt "A couplet: A well contained emptiness, empty kept, your beautiful bottle, shared from the top."
-                :draggable false
                 :width 180
                 :height 265}]]]
   :interior nil}
@@ -37,7 +36,6 @@
              [:img
               {:src "/_asset/mail.gif"
                :alt "A gif: You'll Get Mail"
-               :draggable false
                :width 54
                :height 63}]]
   :interior nil}
@@ -71,13 +69,13 @@
                  :type "video/webm"
                  :width 135
                  :height 135
-                 :autoPlay ""
-                 :playsInline ""
+                 :autoplay "autoplay"
+                 :playsinline ""
                  :loop "loop"
                  :muted "muted"}]]]]
   :interior nil}
  {:id "leaf-2"
-  :parent nil
+  :parent "zap"
   :exterior [:div
              {:style {:border "2px outset #004D4D"
                       :border-radius 1
@@ -91,7 +89,7 @@
                {:src "/_asset/leaf-2.png"
                 :height 60}]]]}
  {:id "leaf-3"
-  :parent nil
+  :parent "zap"
   :exterior [:div
              {:style {:border "2px outset sienna"
                       :border-radius 1
