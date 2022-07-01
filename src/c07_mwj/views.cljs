@@ -26,25 +26,6 @@
      [:small>article#copyright (char 169) " " owner " " (logic/year)]]))
 
 ;; ========== PANELS ===========================================================
-#_(defn main-panel []
-    [:<>
-     [logo]
-     [ph-number]
-   ; [mailer]
-   ; [newt]
-   ; [citrus]
-   ; [bottle]
-   ; [bloom]
-     [mail]
-     [leaf-1]
-     [charms/rf-charm "leaf-1"]
-     [leaf-2]
-     [leaf-3]
-   ; DEBUG
-     #_[debug/pointer-elements]
-     #_[debug/xy-elements]
-     [footer]])
-
 (defn canvas
   []
   (into
