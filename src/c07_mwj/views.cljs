@@ -3,7 +3,7 @@
    [c07-mwj.charms :as charms]
    [c07-mwj.logic :as logic]
    [c07-mwj.rf :as rf :refer [<sub >evt]]
-   [reagent.core :as reagent]
+   [c07-mwj.utilities :as utils]
    [c07-mwj.debug :as debug]))
 
 ;; ========== CONTENTS =========================================================
@@ -28,12 +28,11 @@
 ;; ========== PANELS ===========================================================
 (defn canvas
   []
-  (into
-   [:div#canvas
-    {:style {:visibility "visible"}}]
-   (map
-    (fn [id] [charms/rf-charm id])
-    (<sub [::rf/current-charms "canvas"]))))
+  (let [charms (<sub [::rf/current-charms])
+        charmer (fn [id] [charms/rf-charm id])
+        div [:div#canvas
+             {:style {:visibility "visible"}}]]
+    (into div (map charmer charms))))
 
 (defn main-panel
   []
@@ -42,3 +41,5 @@
    [ph-number]
    [canvas]
    [footer]])
+
+; Form id "5fd5468ccdc040ff3b12248e"

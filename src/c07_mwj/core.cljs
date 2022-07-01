@@ -21,15 +21,7 @@
   (gsap/registerPlugin Draggable)
   (let [root-el (.getElementById js/document "app")]
     (rdom/unmount-component-at-node root-el)
-    (rdom/render [views/main-panel] root-el))
-  ; Look!
-  (Draggable/create ".charm"
-                    #js{:bounds "#canvas"
-                        :onClick #(js/console.log (char 9786))}))
-
-(comment
-  (set! (.. (js/document.getElementById "canvas") -style -visibility) "visible")
-  )
+    (rdom/render [views/main-panel] root-el)))
 
 ;; ========== DATA REQUESTS ====================================================
 (defn load!
@@ -44,5 +36,4 @@
   (load! "/_data/charms.edn")
   (re-frame/dispatch-sync [::rf/initialize-db])
   (dev-setup)
-  (mount-root)
-  (js/console.info "all loaded up"))
+  (mount-root))

@@ -31,7 +31,7 @@
                 :height 265}]]]
   :interior nil}
  {:id "mail"
-  :parent nil
+  :parent "root"
   :exterior [:div.koi-4
              [:img
               {:src "/_asset/mail.gif"
@@ -51,7 +51,7 @@
                [:tr [:td {:colSpan 3}]]]]]
   :interior nil}
  {:id "leaf-1"
-  :parent nil
+  :parent "root"
   :exterior [:div
              {:style {:padding "1rem .5rem"
                       :background "black"
@@ -75,7 +75,7 @@
                  :muted "muted"}]]]]
   :interior nil}
  {:id "leaf-2"
-  :parent "zap"
+  :parent "root"
   :exterior [:div
              {:style {:border "2px outset #004D4D"
                       :border-radius 1
@@ -89,7 +89,7 @@
                {:src "/_asset/leaf-2.png"
                 :height 60}]]]}
  {:id "leaf-3"
-  :parent "zap"
+  :parent "root"
   :exterior [:div
              {:style {:border "2px outset sienna"
                       :border-radius 1
