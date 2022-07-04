@@ -31,7 +31,7 @@
                 :height 265}]]]
   :interior nil}
  {:id "mail"
-  :parent "root"
+  :parent nil
   :exterior [:div.koi-4
              [:img
               {:src "/_asset/mail.gif"
